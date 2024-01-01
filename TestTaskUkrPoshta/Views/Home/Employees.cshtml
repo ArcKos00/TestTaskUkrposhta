@@ -1,0 +1,77 @@
+﻿@model EmployeesViewModel
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div class="text-center">
+    <form class="d-flex flex-row" asp-controller="Home" asp-action="GetEmployees" method="post">
+        <div class="mx-2">
+            <label for="DepartmentId">Department</label>
+            <select id="DepartmentId" class="form-control" asp-items="@Model.Departments" asp-for="Filter.DepartmentId"></select>
+        </div>
+        <div class="mx-2">
+            <label for="PositionId">Position</label>
+            <select id="PositionId" class="form-control" asp-items="@Model.Positions" asp-for="Filter.PositionId"></select>
+        </div>
+        <div class="mx-2">
+            <label for="HireFrom">From Date Of Hire</label>
+            <input id="HireFrom" type="date" class="form-control" value="@Model.Filter.DateOfHireFrom" asp-for="Filter.DateOfHireFrom" />
+        </div>
+        <div class="mx-2">
+            <label for="HireTo">To Date Of Hire</label>
+            <input id="HireTo" type="date" class="form-control" value="@Model.Filter.DateOfHireTo" asp-for="Filter.DateOfHireTo" />
+        </div>
+        <div class="mx-2">
+            <label for="BirthFrom">From Date Of Birth</label>
+            <input id="BirthFrom" type="date" class="form-control" value="@Model.Filter.DateOfBirthFrom" asp-for="Filter.DateOfBirthFrom" />
+        </div>
+        <div class="mx-2">
+            <label for="BirthTo">To Date Of Birth</label>
+            <input id="BirthTo" type="date" class="form-control" value="@Model.Filter.DateOfBirthTo" asp-for="Filter.DateOfBirthTo" />
+        </div>
+        <div class="mx-2">
+            <label for="SalaryFrom">Salary From</label>
+            <input id="SalaryFrom" type="number" class="form-control" value="@Model.Filter.SalaryFrom" asp-for="Filter.SalaryFrom" />
+        </div>
+        <div class="mx-2">
+            <label for="SalaryTo">Salary To</label>
+            <input id="SalaryTo" type="number" class="form-control" value="@Model.Filter.SalaryTo" asp-for="Filter.SalaryTo" />
+        </div>
+        <div class="mx-2">
+            <label for="Search">Search</label>
+            <input id="Search" type="text" value="@Model.Filter.Search" asp-for="Filter.Search" />
+        </div>
+        <button class="btn btn-primary" type="submit">Find</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>DateOfHire</th>
+                <th>Salary</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>DateOfBirth</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model.Employees)
+            {
+                <tr>
+                    <td>@employee.FullName</td>
+                    <td>@employee.Department</td>
+                    <td>@employee.Position</td>
+                    <td>@DateOnly.FromDateTime(employee.DateOfHire)</td>
+                    <td>@employee.Salary $</td>
+                    <td>@employee.Address</td>
+                    <td>@employee.Phone</td>
+                    <td>@DateOnly.FromDateTime(employee.DateOfBirth)</td>
+                    <td><a asp-controller="Home" asp-action="GetEmployee" asp-route-id="@employee.Id" class="btn btn-secondary">Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

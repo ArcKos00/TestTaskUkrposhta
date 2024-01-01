@@ -1,0 +1,10 @@
+﻿@model MainViewModel
+@{
+    ViewData["Title"] = "Main Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Company: @Model.Company.Title</h1>
+    <p>Description</p>
+    <p>@Model.Company?.Description</p>
+</div>

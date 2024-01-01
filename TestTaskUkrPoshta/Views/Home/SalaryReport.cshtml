@@ -1,0 +1,69 @@
+﻿@model EmployeesViewModel
+@{
+    ViewData["Title"] = "Salary Report";
+}
+
+<div class="text-center">
+    <form class="d-flex flex-row" asp-controller="Home" asp-action="GetSalaryReport" method="post">
+        <div class="mx-2">
+            <label for="DepartmentId">Department</label>
+            <select onchange="applyFilters()" id="DepartmentId" class="form-control" asp-items="@Model.Departments" asp-for="Filter.DepartmentId"></select>
+        </div>
+        <div class="mx-2">
+            <label for="PositionId">Position</label>
+            <select onchange="applyFilters()" id="PositionId" class="form-control" asp-items="@Model.Positions" asp-for="Filter.PositionId"></select>
+        </div>
+        <div class="mx-2">
+            <label for="HireFrom">From Date Of Hire</label>
+            <input onchange="applyFilters()" id="HireFrom" type="date" class="form-control" value="@Model.Filter.DateOfHireFrom" asp-for="Filter.DateOfHireFrom" />
+        </div>
+        <div class="mx-2">
+            <label for="HireTo">To Date Of Hire</label>
+            <input onchange="applyFilters()" id="HireTo" type="date" class="form-control" value="@Model.Filter.DateOfHireTo" asp-for="Filter.DateOfHireTo" />
+        </div>
+        <div class="mx-2">
+            <label for="BirthFrom">From Date Of Birth</label>
+            <input onchange="applyFilters()" id="BirthFrom" type="date" class="form-control" value="@Model.Filter.DateOfBirthFrom" asp-for="Filter.DateOfBirthFrom" />
+        </div>
+        <div class="mx-2">
+            <label for="BirthTo">To Date Of Birth</label>
+            <input onchange="applyFilters()" id="BirthTo" type="date" class="form-control" value="@Model.Filter.DateOfBirthTo" asp-for="Filter.DateOfBirthTo" />
+        </div>
+        <div class="mx-2">
+            <label for="SalaryTo">Salary From</label>
+            <input onchange="applyFilters()" id="SalaryFrom" type="number" class="form-control" value="@Model.Filter.SalaryFrom" asp-for="Filter.SalaryFrom" />
+        </div>
+        <div class="mx-2">
+            <label for="SalaryFrom">Salary To</label>
+            <input onchange="applyFilters()" id="SalaryTo" type="number" class="form-control" value="@Model.Filter.SalaryTo" asp-for="Filter.SalaryTo" />
+        </div>
+        <div class="mx-2">
+            <label for="Search">Search</label>
+            <input onchange="applyFilters()" id="Search" type="text" value="@Model.Filter.Search" asp-for="Filter.Search" />
+        </div>
+        <button class="btn btn-primary" type="submit">Download txt</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>DateOfHire</th>
+                <th>Salary</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>DateOfBirth</th>
+            </tr>
+        </thead>
+        <tbody id="table">
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/salary-report.js"></script>
+    <script>
+        loadData(@(Json.Serialize(Model.Employees)));
+    </script>
+}

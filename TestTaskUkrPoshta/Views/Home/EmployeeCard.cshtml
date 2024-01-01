@@ -1,0 +1,47 @@
+﻿@model EmployeeCardViewModel
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+
+<div class="text-center">
+    <div class="card">
+        <div class="card-body">
+            <form asp-controller="Home" asp-action="UpdateEmployee" method="post">
+                <input type="hidden" name="Id" value="@Model.Employee.Id" />
+                <div class="my-2">
+                    <label class="form-label" for="FullName">FullName</label>
+                    <input class="form-control" id="FullName" type="text" value="@Model.Employee.FullName" name="FullName" />
+                </div>
+                <div class="my-2">
+                    <label class="form-label" for="Department">Department</label>
+                    <select class="form-control" id="Department" asp-items="@Model.Departments" name="DepartmentId"></select>
+                </div>
+                <div class="my-2">
+                    <label class="form-label" for="Position">Position</label>
+                    <select class="form-control" id="Position" asp-items="@Model.Positions" name="PositionId"></select>
+                </div>
+                <div class="my-2">
+                    <label class="form-label" for="Salary">Salary</label>
+                    <input class="form-control" id="Salary" type="number" value="@Model.Employee.Salary" name="Salary" />
+                </div>
+                <div class="my-2">
+                    <label class="form-label" for="DateOfHiring">DateOfHiring</label>
+                    <input class="form-control" id="DateOfHiring" type="date" value="@Model.Employee.DateOfHire.ToString("yyyy-MM-dd")" name="DateOfHire" />
+                </div>
+                <div class="my-2">
+                    <label class="form-label" for="DateOfBirth">DateOfBirth</label>
+                    <input class="form-control" id="DateOfBirth" type="date" value="@Model.Employee.DateOfBirth.ToString("yyyy-MM-dd")" name="DateOfBirth" />
+                </div>
+                <div class="my-2">
+                    <label class="form-label" for="Address">Address</label>
+                    <input class="form-control" id="Address" type="text" value="@Model.Employee.Address" name="Address" />
+                </div>
+                <div class="my-2">
+                    <label class="form-label" for="Phone">Phone</label>
+                    <input class="form-control" id="Phone" type="text" value="@Model.Employee.Phone" name="Phone" />
+                </div>
+                <button class="btn btn-success" type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
