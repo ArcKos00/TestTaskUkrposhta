@@ -7,94 +7,24 @@ namespace TestTaskUkrPoshta.StaticServices
 {
     public static class SqlQueryBuilder
     {
-        private const string _database = "[Test].[dbo]";
+        private const string _databaseName = "Task";
+        private const string _database = $"[{_databaseName}].[dbo]";
         private static readonly StringBuilder Builder = new();
 
         public static IEnumerable<string> GetCreateDatabase()
             => new List<string>
             {
-                """
-                USE [master]
-                
-                CREATE DATABASE [Test]
-                 CONTAINMENT = NONE
-                 ON  PRIMARY 
-                ( NAME = N'Test', FILENAME = N'/var/opt/mssql/data/Test.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
-                 LOG ON 
-                ( NAME = N'Test_log', FILENAME = N'/var/opt/mssql/data/Test_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
-                 WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
-                
-                IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-                begin
-                EXEC [Test].[dbo].[sp_fulltext_database] @action = 'enable'
-                end
-                
-                ALTER DATABASE [Test] SET ANSI_NULL_DEFAULT OFF 
-                
-                ALTER DATABASE [Test] SET ANSI_NULLS OFF 
-                
-                ALTER DATABASE [Test] SET ANSI_PADDING OFF 
-                
-                ALTER DATABASE [Test] SET ANSI_WARNINGS OFF 
-                
-                ALTER DATABASE [Test] SET ARITHABORT OFF 
-                
-                ALTER DATABASE [Test] SET AUTO_CLOSE OFF 
-                
-                ALTER DATABASE [Test] SET AUTO_SHRINK OFF 
-                
-                ALTER DATABASE [Test] SET AUTO_UPDATE_STATISTICS ON 
-                
-                ALTER DATABASE [Test] SET CURSOR_CLOSE_ON_COMMIT OFF 
-                
-                ALTER DATABASE [Test] SET CURSOR_DEFAULT  GLOBAL 
-                
-                ALTER DATABASE [Test] SET CONCAT_NULL_YIELDS_NULL OFF 
-                
-                ALTER DATABASE [Test] SET NUMERIC_ROUNDABORT OFF 
-                
-                ALTER DATABASE [Test] SET QUOTED_IDENTIFIER OFF 
-                
-                ALTER DATABASE [Test] SET RECURSIVE_TRIGGERS OFF 
-                
-                ALTER DATABASE [Test] SET  DISABLE_BROKER 
-                
-                ALTER DATABASE [Test] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-                
-                ALTER DATABASE [Test] SET DATE_CORRELATION_OPTIMIZATION OFF 
-                
-                ALTER DATABASE [Test] SET TRUSTWORTHY OFF 
-                
-                ALTER DATABASE [Test] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-                
-                ALTER DATABASE [Test] SET PARAMETERIZATION SIMPLE 
-                
-                ALTER DATABASE [Test] SET READ_COMMITTED_SNAPSHOT OFF 
-                
-                ALTER DATABASE [Test] SET HONOR_BROKER_PRIORITY OFF 
-                
-                ALTER DATABASE [Test] SET RECOVERY FULL 
-                
-                ALTER DATABASE [Test] SET  MULTI_USER 
-                
-                ALTER DATABASE [Test] SET PAGE_VERIFY CHECKSUM  
-                
-                ALTER DATABASE [Test] SET DB_CHAINING OFF 
-                
-                ALTER DATABASE [Test] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
-                
-                ALTER DATABASE [Test] SET TARGET_RECOVERY_TIME = 60 SECONDS 
-                
-                ALTER DATABASE [Test] SET DELAYED_DURABILITY = DISABLED 
-                
-                ALTER DATABASE [Test] SET ACCELERATED_DATABASE_RECOVERY = OFF  
-                
-                ALTER DATABASE [Test] SET QUERY_STORE = ON
-                
-                ALTER DATABASE [Test] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
-                
-                ALTER DATABASE [Test] SET  READ_WRITE
-                """,
+                $"""
+                 USE [master]
+                 
+                 CREATE DATABASE [{_databaseName}]
+                  CONTAINMENT = NONE
+                  ON  PRIMARY 
+                 ( NAME = N'{_databaseName}', FILENAME = N'/var/opt/mssql/data/{_databaseName}.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+                  LOG ON 
+                 ( NAME = N'{_databaseName}_log', FILENAME = N'/var/opt/mssql/data/{_databaseName}_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+                  WITH CATALOG_COLLATION = DATABASE_DEFAULT
+                 """,
             };
 
         public static IEnumerable<string> GetCreateTablesQuery()
